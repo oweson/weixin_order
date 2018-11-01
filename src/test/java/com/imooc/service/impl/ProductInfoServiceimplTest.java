@@ -27,6 +27,10 @@ public class ProductInfoServiceimplTest {
     @Autowired
     private ProductService productService;
 
+    /**
+     * 1 根据产品的id查询一个产品信息
+     */
+
     @Test
     public void findOne() {
         ProductInfo one = productService.findOne("123456");
@@ -35,28 +39,26 @@ public class ProductInfoServiceimplTest {
 
     }
 
+    /**
+     * 2 查询所有上架的商品
+     */
     @Test
-    public void findAll() {
-        List<ProductInfo> all = productService.findAll();
+    public void findUpAll() {
+        List<ProductInfo> all = productService.findUpAll();
         for (ProductInfo productInfo : all) {
             System.out.println(productInfo);
 
         }
     }
-    @Test
-    public void findUpAll() {
-        List<ProductInfo> upAll = productService.findUpAll();
-        System.out.println(upAll);
 
-    }
 
-    @Test
-    public void listProductInfoBtTypeId() {
-    }
+    /**
+     * 3 获得全部的商品，上架的和非上架的,进行分页显示
+     */
 
     @Test
     public void findByPage() {
-        PageRequest request  =new PageRequest(0,2);
+        PageRequest request = new PageRequest(0, 2);
         /**得到分页对象*/
         Page<ProductInfo> byPage = productService.findByPage(request);
         for (ProductInfo productInfo : byPage) {
@@ -65,6 +67,9 @@ public class ProductInfoServiceimplTest {
         }
     }
 
+    /**
+     * 4 新增商品
+     */
     @Test
     public void save() {
         ProductInfo productInfo = new ProductInfo();
@@ -74,12 +79,30 @@ public class ProductInfoServiceimplTest {
         productInfo.setProductStock(100);
         productInfo.setProductDescription("the apple from sourth");
         productInfo.setProductIcon("http://xxxxx.jpg");
-        productInfo.setProductStatus(ProductStatusEnum.UP.getStatus());
-        /**商品类别的id,通过id加一区分，商品对应某个分类*/
+        productInfo.setProductStatus(ProductStatusEnum.UP.getCode());
+        /**商品类别的id,通过id加一区分，
+         * 商品对应某个分类*/
         productInfo.setCategoryType(1);
         ProductInfo save = productService.save(productInfo);
         assertNotNull(save);
 
 
     }
+    /** 5 增加库存*/
+    /**
+     * 6 减少库存
+     */
+    /**
+     * 同三
+     */
+    @Test
+    public void pageTest() {
+        PageRequest pageRequest = new PageRequest(0, 8);
+        Page<ProductInfo> productServiceByPage = productService.findByPage(pageRequest);
+        for (ProductInfo productInfo : productServiceByPage) {
+            System.out.println(productInfo);
+
+        }
+    }
+
 }

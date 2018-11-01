@@ -1,25 +1,26 @@
 package com.imooc.enums;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
- * the class is create by @Author:oweson
- *
- * @Date：2018/10/1 0001 11:15
+ * 商品状态
+ * Created by 廖师兄
+ * 2017-05-09 17:33
  */
 @Getter
-public enum ProductStatusEnum {
-    /**商品的状态枚举类*/
-    UP(0,"上架商品"),
-    DOWN(1,"下架商品");
-    private Integer status;
+public enum ProductStatusEnum implements CodeEnum {
+    UP(0, "在架"),
+    DOWN(1, "下架")
+    ;
+
+    private Integer code;
+
     private String message;
 
-
-    ProductStatusEnum(Integer status, String message) {
-        this.status = status;
+    ProductStatusEnum(Integer code, String message) {
+        this.code = code;
         this.message = message;
     }
+
+
 }

@@ -6,10 +6,11 @@
 <#--边栏sidebar-->
     <#include "../common/nav.ftl">
 
-    <#--主要内容content-->
+<#--主要内容content-->
     <div id="page-content-wrapper">
         <div class="container">
             <div class="row clearfix">
+                <!--bootstrp是根据删格系统布局的md-4,而不是md-12-->
                 <div class="col-md-4 column">
                     <table class="table table-bordered">
                         <thead>
@@ -56,9 +57,12 @@
 
             <#--操作-->
                 <div class="col-md-12 column">
+                    <!--是新的订单下面的两个按钮才会出现-->
             <#if orderDTO.getOrderStatusEnum().message == "新订单">
-                <a href="/sell/seller/order/finish?orderId=${orderDTO.orderId}" type="button" class="btn btn-default btn-primary">完结订单</a>
-                <a href="/sell/seller/order/cancel?orderId=${orderDTO.orderId}" type="button" class="btn btn-default btn-danger">取消订单</a>
+                <a href="/sell/seller/order/finish?orderId=${orderDTO.orderId}" type="button"
+                   class="btn btn-default btn-primary">完结订单</a>
+                <a href="/sell/seller/order/cancel?orderId=${orderDTO.orderId}" type="button"
+                   class="btn btn-default btn-danger">取消订单</a>
             </#if>
 
                 </div>

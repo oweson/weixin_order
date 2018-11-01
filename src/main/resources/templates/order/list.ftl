@@ -4,11 +4,12 @@
 <body>
 <div id="wrapper" class="toggled">
 
-    <#--边栏sidebar-->
+<#--边栏sidebar,最外层的div包含里面的-->
     <#include "../common/nav.ftl">
 
-    <#--主要内容content-->
+<#--主要内容content-->
     <div id="page-content-wrapper">
+        <!--下面的class添加了-fluid流动布局，否则没有效果切记-->
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-12 column">
@@ -40,6 +41,7 @@
                             <td>${orderDTO.createTime}</td>
                             <td><a href="/sell/seller/order/detail?orderId=${orderDTO.orderId}">详情</a></td>
                             <td>
+                                <!--进行新的订单的判断，如果已经取消或者完结的订单都不会显示了-->
                                 <#if orderDTO.getOrderStatusEnum().message == "新订单">
                                     <a href="/sell/seller/order/cancel?orderId=${orderDTO.orderId}">取消</a>
                                 </#if>
@@ -92,7 +94,9 @@
                 你有新的订单
             </div>
             <div class="modal-footer">
-                <button onclick="javascript:document.getElementById('notice').pause()" type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button onclick="javascript:document.getElementById('notice').pause()" type="button"
+                        class="btn btn-default" data-dismiss="modal">关闭
+                </button>
                 <button onclick="location.reload()" type="button" class="btn btn-primary">查看新的订单</button>
             </div>
         </div>
@@ -100,32 +104,32 @@
 </div>
 <#--播放音乐-->
 <audio id="notice" loop="loop">
-    <source src="/sell/mp3/song.mp3" type="audio/mpeg" />
+    <source src="/sell/mp3/song.mp3" type="audio/mpeg"/>
 </audio>
 
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script>
-    var websocket=null;
-    if('WebSocket' in window){
-        websocket=new WebSocket('ws://sqmax.natapp1.cc/sell/webSocket');
-    }else{
+    var websocket = null;
+    if ('WebSocket' in window) {
+        websocket = new WebSocket('ws://sqmax.natapp1.cc/sell/webSocket');
+    } else {
         alert('该浏览器不支持websocket');
     }
-    websocket.onopen=function (ev) {
+    websocket.onopen = function (ev) {
         console.log('建立连接');
     }
-    websocket.onclose=function (ev) {
+    websocket.onclose = function (ev) {
         console.log('连接关闭');
     }
-    websocket.onmessage=function (ev) {
-        console.log('收到消息：'+ev.data);
+    websocket.onmessage = function (ev) {
+        console.log('收到消息：' + ev.data);
         //弹窗提醒，播放消息
         $('#myModal').modal('show');
 
         document.getElementById('notice').play();
     }
-    window.onbeforeunload=function (ev) {
+    window.onbeforeunload = function (ev) {
         websocket.close();
     }
 </script>

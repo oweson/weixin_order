@@ -6,6 +6,7 @@ import lombok.Data;
  * the class is create by @Author:oweson
  *
  * @Date：2018/10/1 0001 12:06
+ * 结果信息返回类
  */
 @Data
 public class ResultVO<T> {

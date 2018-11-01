@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
+
 /**
- * 商品的详情
+ * 商品的详情,因为返回的时候，
+ * 有的字段木有不要返回
  * the class is create by @Author:oweson
  *
  * @Date：2018/10/1 0001 12:08
@@ -14,7 +16,9 @@ import java.math.BigDecimal;
 
 @Data
 public class ProductInfoVO {
-/**json序列化的时候记性映射*/
+    /**
+     * json序列化的时候记性映射
+     */
     @JsonProperty("id")
     private String productId;
 
