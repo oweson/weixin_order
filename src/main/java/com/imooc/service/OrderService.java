@@ -16,17 +16,17 @@ public interface OrderService {
     OrderDTO create(OrderDTO orderDTO);
 
     /**
-     * 2根据订单的id查询单个订单.
+     * 2 根据订单的id查询单个订单.
      */
     OrderDTO findOne(String orderId);
 
     /**
-     * 3根据买家的微信id去查询订单列表.
+     * 3 根据买家的微信id去查询订单列表.
      */
     Page<OrderDTO> findList(String buyerOpenid, Pageable pageable);
 
     /**
-     * 4取消订单.
+     * 4 取消订单.
      */
     OrderDTO cancel(OrderDTO orderDTO);
 

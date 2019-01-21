@@ -28,6 +28,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
         String orderId = KeyUtil.genUniqueKey();
         /**0 初始化总价*/
         BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
+        List<CartDTO> cartDTOS = new ArrayList<>();
         /** 1 查询商品数量，总价*/
         for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
             /** 遍历订单里面的商品详情集合,
@@ -69,16 +71,17 @@ public class OrderServiceImpl implements OrderService {
             }
             /** 2 计算总价,商品详情里面有对应的商品的数据；
              * 用productInfo，detail传入的只有很少的值，有的为null*/
-            orderAmount = productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity())).add(orderAmount
+            orderAmount = productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.
+                    getProductQuantity())).add(orderAmount
             );
             /** 3 订单详情入库*/
 
-            /**拷贝属性到ordderDetail，这个时候的订单详情的id是不存在的
+            /**拷贝属性到orderDetail，这个时候的订单详情的id是不存在的
              * 所有详情的id要咋后面设置，前面的化会进行覆盖*/
             BeanUtils.copyProperties(productInfo, orderDetail);
             /**设置订单详情的id*/
             orderDetail.setDetailId(KeyUtil.genUniqueKey());
-            /**一个订单的id对应多个订单项,订单项不仅仅订单项的id还要订单的id,
+            /**一个订单的id对应多个订单项,订单项不仅仅订单项的id还要--------订单的id,
              * 因为这个订单项是属于哪个订单的；
              * 属性拷贝会用null进行覆盖，
              * 所以要放到后面，最后进行设置*/
@@ -86,6 +89,8 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setOrderId(orderId);
             /**订单项入库*/
             orderDetailRepository.save(orderDetail);
+           /*方案一： CartDTO cartDTO  =new CartDTO(orderDetail.getProductId(),orderDetail.getProductQuantity());
+            cartDTOS.add(cartDTO);*/
 
 
         }
@@ -99,29 +104,34 @@ public class OrderServiceImpl implements OrderService {
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
         orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
         orderMasterRepository.save(orderMaster);
-        /**4 减库存
-         * 集合指向结果，简介的代码？？？？？，，，*/
+        /**5 减库存
+         * 集合指向结果，扣除库存放在外面*/
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
                 new CartDTO(e.getProductId(), e.getProductQuantity())
         ).collect(Collectors.toList());
+        //todo ???怎么减掉的库存
+       /* orderDTO.getOrderDetailList().stream()
+                .map(e->new CartDTO(e.getProductId(),e.getProductQuantity())).collect(Collectors.toList());*/
         productService.decreaseStock(cartDTOList);
         return orderDTO;
     }
 
     /**
-     * 2 根据订单的id查询订单，返回多个订单的详情
+     * 2 根据订单的id查询订单，返回多个订单项的详情
      */
     @Override
     public OrderDTO findOne(String orderId) {
+        /**查出订单*/
         OrderMaster orderMaster = orderMasterRepository.findOne(orderId);
         if (orderMaster == null) {
             /**判断订单是否存在*/
             throw new SellException(ResultEnum.ORDER_NOT_EXIST);
         }
-        /**订单项根据订单的查询订单详情，一个订单的id对应一个或者多个订单详情的id*/
+        /**订单项:根据订单的id查询订单详情的集合，一个订单的id对应一个或者多个订单详情的id*/
         List<OrderDetail> byOrderId = orderDetailRepository.findByOrderId(orderId);
         OrderDTO orderDTO = new OrderDTO();
         BeanUtils.copyProperties(orderMaster, orderDTO);
+        /**设置订单项的集合到订单vo*/
         orderDTO.setOrderDetailList(byOrderId);
         /**返回orderDTO里面包很多的订单详情*/
         return orderDTO;
@@ -135,6 +145,7 @@ public class OrderServiceImpl implements OrderService {
         /**不需要判断，找到就返回，找不到返回空*/
         /**??????????????*/
         List<OrderDTO> orderDTOList = OrderMaster2OrderDtoConverter.convert(orderMasterPage.getContent());
+        /**数据，分页，总的数据*/
         return new PageImpl<>(orderDTOList, pageable, orderMasterPage.getTotalElements());
     }
 
@@ -182,6 +193,7 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDTO, orderMaster);
+        /**订单入库，状态改变*/
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);
         if (updateResult == null) {
             log.error("【完结订单】更新失败, orderMaster={}", orderMaster);

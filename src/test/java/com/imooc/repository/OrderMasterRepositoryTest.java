@@ -1,5 +1,6 @@
 package com.imooc.repository;
 
+import com.imooc.dataobject.OrderDetail;
 import com.imooc.dataobject.OrderMaster;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -46,6 +48,23 @@ public class OrderMasterRepositoryTest {
     public void findByBuyerOpenid() {
         PageRequest request = new PageRequest(0,1);
         Page<OrderMaster> byBuyerOpenid = repository.findByBuyerOpenid("10101001", request);
+        assertNotNull(byBuyerOpenid);
+
+
+
+    }
+    @Test
+    public void lambdaTest() {
+        /** List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
+                new CartDTO(e.getProductId(), e.getProductQuantity())
+        ).collect(Collectors.toList());*/
+        PageRequest request = new PageRequest(0,10);
+        Page<OrderMaster> byBuyerOpenid = repository.findByBuyerOpenid("1234567", request);
+        System.out.println(byBuyerOpenid.getTotalElements());
+        List<OrderDetail> collect = byBuyerOpenid.getContent()
+                .stream().map(e -> new OrderDetail(e.getOrderId(), 2)).collect(Collectors.toList());
+        System.out.println(collect.toString());
+
         assertNotNull(byBuyerOpenid);
 
 

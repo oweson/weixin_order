@@ -1,6 +1,7 @@
 package com.imooc.dataobject;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Entity;
@@ -26,6 +27,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @Data
+@NoArgsConstructor
 public class OrderDetail {
     /**
      * 订单详情表
@@ -63,4 +65,9 @@ public class OrderDetail {
      * 商品小图.
      */
     private String productIcon;
+
+    public OrderDetail(String orderId, Integer productQuantity) {
+        this.orderId = orderId;
+        this.productQuantity = productQuantity;
+    }
 }

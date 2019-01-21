@@ -1,7 +1,6 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
     <ul class="nav sidebar-nav">
         <li class="sidebar-brand">
-            <!--变蓝，左边的部分side-->
             <a href="#">
                 卖家管理系统
             </a>
@@ -21,7 +20,6 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-fw fa-plus"></i> 类目 <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li class="dropdown-header">操作</li>
-                <!--分类的新增-->
                 <li><a href="/sell/seller/category/list">列表</a></li>
                 <li><a href="/sell/seller/category/index">新增</a></li>
             </ul>

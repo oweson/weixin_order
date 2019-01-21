@@ -15,10 +15,17 @@ import org.springframework.stereotype.Service;
 public class SellerServiceImpl implements SellerService {
     @Autowired
     private SellerInfoRepository repository;
-/**根据卖家的openId查询卖家的信息*/
+
+    /**
+     * 1 根据卖家的openId查询卖家的信息
+     */
     @Override
     public SellerInfo findSellerInfoByOpenId(String openId) {
+        SellerInfo repositoryByOpenid = repository.findByOpenid(openId);
+        if (repositoryByOpenid == null) {
+            return null;
+        }
 
-        return null;
+        return repositoryByOpenid;
     }
 }

@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
-     * 1 根据分类的id查询一条分类信息
+     * 2 根据分类的id查询一条分类信息
      */
     @Override
     public ProductCategory findOne(Integer categoryId) {
@@ -37,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
-     * 2 查询所有的分类信息
+     * 3 查询所有的分类信息
      */
     @Override
     public List<ProductCategory> findAll() {
@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
-     * 3 查询具体的分类信息，套餐啦，热榜啦......
+     * 4 查询具体的分类信息，套餐啦，热榜啦......
      */
     @Override
     public List<ProductCategory> listCatogoryByCategoryIdType(List<Integer> list) {

@@ -29,7 +29,18 @@ public class ProductInfoServiceimpl implements ProductService {
      * 1 增加库存
      */
     @Override
+    @Transactional
     public void increaseStock(List<CartDTO> cartDTOList) {
+        for (CartDTO cartDTO: cartDTOList) {
+            ProductInfo productInfo = repository.findOne(cartDTO.getProductId());
+            if (productInfo == null) {
+                throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+            }
+            Integer result = productInfo.getProductStock() + cartDTO.getProductQuantity();
+            productInfo.setProductStock(result);
+
+            repository.save(productInfo);
+        }
 
     }
 
@@ -42,14 +53,14 @@ public class ProductInfoServiceimpl implements ProductService {
             if (productInfo == null) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
-
+            /**查看库存是否足够*/
             Integer result = productInfo.getProductStock() - cartDTO.getProductQuantity();
             if (result < 0) {
                 throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
             }
-/**把新的库存写入数据库*/
+          /**把新的库存写入数据库*/
             productInfo.setProductStock(result);
-/**为何保存？？？？？*/
+            /**重新入库，更改数量*/
             repository.save(productInfo);
         }
     }

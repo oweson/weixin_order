@@ -15,7 +15,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, String
      * 1 master对应detail四1：m的关系，
      * 根据orderId查询
      * 思路：先根据买家的openId,查询订单的orderId,
-     * 然后根据orderId区查询订单详情可能返回一个或者多个
+     * 然后根据orderId去查询订单详情可能返回一个或者多个
      */
     List<OrderDetail> findByOrderId(String orderId);
 }

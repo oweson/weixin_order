@@ -14,12 +14,12 @@ import java.util.List;
  */
 public interface ProductService {
     /**
-     * -1 查询所有在架子的商品列表
+     * 1 查询所有在架子的商品列表
      */
     List<ProductInfo> findUpAll();
 
     /**
-     * 1 根据产品的id查询一个产品信息
+     * 2 根据产品的id查询一个产品信息
      */
     ProductInfo findOne(String productId);
 
@@ -35,22 +35,22 @@ public interface ProductService {
     ProductInfo save(ProductInfo productInfo);
 
     /**
-     * 5加库存
+     * 5 加库存
      */
     void increaseStock(List<CartDTO> cartDTOList);
 
     /**
-     * 6减库存
+     * 6 减库存，传入的是购物车：商品的id和数量
      */
     void decreaseStock(List<CartDTO> cartDTOList);
 
     /**
-     * 7上架,id更方便，对象的话好要每次查出来.....
+     * 7上架,id更方便，对象的话还要每次查出来.....
      */
     ProductInfo onSale(String productId);
 
     /**
-     * 8下架
+     * 8 下架
      */
     ProductInfo offSale(String productId);
 }
