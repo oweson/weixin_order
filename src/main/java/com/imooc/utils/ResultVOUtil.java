@@ -3,12 +3,11 @@ package com.imooc.utils;
 
 import com.imooc.vo.ResultVO;
 
-/**
- * Created by 廖师兄
- * 2017-05-15 00:22
- */
-public class ResultVOUtil {
 
+public class ResultVOUtil {
+    /**
+     * 1 成功返回数据
+     */
     public static ResultVO success(Object object) {
         ResultVO resultVO = new ResultVO();
         resultVO.setData(object);
@@ -17,6 +16,9 @@ public class ResultVOUtil {
         return resultVO;
     }
 
+    /**
+     * 2 成功什么也不返回；
+     */
     public static ResultVO success() {
         return success(null);
     }

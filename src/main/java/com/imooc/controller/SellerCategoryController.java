@@ -81,7 +81,7 @@ public class SellerCategoryController {
             map.put("url", "/sell/seller/category/index");
             return new ModelAndView("common/error", map);
         }
-/**初始化部分的值*/
+       /**初始化部分的值*/
         ProductCategory productCategory = new ProductCategory();
         try {
             if (form.getCategoryId() != null) {

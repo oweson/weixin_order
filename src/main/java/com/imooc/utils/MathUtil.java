@@ -1,15 +1,11 @@
 package com.imooc.utils;
 
-/**
- * Created by 廖师兄
- * 2017-07-09 16:56
- */
 public class MathUtil {
 
     private static final Double MONEY_RANGE = 0.01;
 
     /**
-     * 比较2个金额是否相等
+     * 1 比较2个金额是否相等
      * @param d1
      * @param d2
      * @return

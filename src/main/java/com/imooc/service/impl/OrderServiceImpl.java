@@ -159,7 +159,7 @@ public class OrderServiceImpl implements OrderService {
         if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
             throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
         }
-/** 2 修改订单的状态，*/
+         /** 2 修改订单的状态，*/
         orderDTO.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
         BeanUtils.copyProperties(orderMaster, orderDTO);
 
@@ -193,7 +193,7 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDTO, orderMaster);
-        /**订单入库，状态改变*/
+        /** 订单入库，状态改变*/
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);
         if (updateResult == null) {
             log.error("【完结订单】更新失败, orderMaster={}", orderMaster);

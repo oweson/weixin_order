@@ -24,8 +24,6 @@ public class ProductVO {
     /**
      * 一个热榜对应多个商品的详情，category_type，
      * 处于安全需要什么返回什么；
-     */
-    /**
      * 序列化为foods
      */
     @JsonProperty("foods")

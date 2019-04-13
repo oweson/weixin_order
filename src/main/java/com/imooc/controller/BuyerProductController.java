@@ -45,7 +45,6 @@ public class BuyerProductController {
          list.add(productInfo.getCategoryType());
          }
          categoryService.listCatogoryByCategoryIdType(list);*/
-        upAll.stream().map(e -> e.getCategoryType()).collect(Collectors.toList());
 
         /** 2 lambda表达式的写法,
          * collect,toList()作为list来收集*/

@@ -67,7 +67,7 @@ public class BuyerOrderController {
     }
 
     /**
-     * 2订单列表
+     * 2 订单列表
      */
     @GetMapping("/list")
     public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String openid,
@@ -86,7 +86,7 @@ public class BuyerOrderController {
 
 
     /**
-     * 3订单详情
+     * 3 订单详情
      */
     @GetMapping("/detail")
     public ResultVO<OrderDTO> detail(@RequestParam("openid") String openid,
@@ -97,7 +97,7 @@ public class BuyerOrderController {
     }
 
     /**
-     * 4取消订单
+     * 4 取消订单
      */
     @PostMapping("/cancel")
     public ResultVO cancel(@RequestParam("openid") String openid,
