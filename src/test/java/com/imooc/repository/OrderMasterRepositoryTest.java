@@ -1,9 +1,6 @@
 package com.imooc.repository;
 
-<<<<<<< HEAD
-=======
 import com.imooc.dataobject.OrderDetail;
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 import com.imooc.dataobject.OrderMaster;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,10 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.List;
-<<<<<<< HEAD
-=======
 import java.util.stream.Collectors;
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 
 import static org.junit.Assert.*;
 
@@ -59,8 +53,6 @@ public class OrderMasterRepositoryTest {
 
 
     }
-<<<<<<< HEAD
-=======
     @Test
     public void lambdaTest() {
         /** List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
@@ -78,5 +70,4 @@ public class OrderMasterRepositoryTest {
 
 
     }
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 }
