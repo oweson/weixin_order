@@ -67,7 +67,11 @@ public class BuyerOrderController {
     }
 
     /**
+<<<<<<< HEAD
      * 2订单列表
+=======
+     * 2 订单列表
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
      */
     @GetMapping("/list")
     public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String openid,
@@ -86,7 +90,11 @@ public class BuyerOrderController {
 
 
     /**
+<<<<<<< HEAD
      * 3订单详情
+=======
+     * 3 订单详情
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
      */
     @GetMapping("/detail")
     public ResultVO<OrderDTO> detail(@RequestParam("openid") String openid,
@@ -97,7 +105,11 @@ public class BuyerOrderController {
     }
 
     /**
+<<<<<<< HEAD
      * 4取消订单
+=======
+     * 4 取消订单
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
      */
     @PostMapping("/cancel")
     public ResultVO cancel(@RequestParam("openid") String openid,

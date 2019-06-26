@@ -1,6 +1,10 @@
 package com.imooc.dataobject;
 
 import lombok.Data;
+<<<<<<< HEAD
+=======
+import lombok.NoArgsConstructor;
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Entity;
@@ -26,6 +30,10 @@ import java.math.BigDecimal;
  */
 @Entity
 @Data
+<<<<<<< HEAD
+=======
+@NoArgsConstructor
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 public class OrderDetail {
     /**
      * 订单详情表
@@ -63,4 +71,12 @@ public class OrderDetail {
      * 商品小图.
      */
     private String productIcon;
+<<<<<<< HEAD
+=======
+
+    public OrderDetail(String orderId, Integer productQuantity) {
+        this.orderId = orderId;
+        this.productQuantity = productQuantity;
+    }
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 }

@@ -2,11 +2,15 @@ package com.imooc.enums;
 
 import lombok.Getter;
 
+<<<<<<< HEAD
 /**
  * 商品状态
  * Created by 廖师兄
  * 2017-05-09 17:33
  */
+=======
+
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 @Getter
 public enum ProductStatusEnum implements CodeEnum {
     UP(0, "在架"),

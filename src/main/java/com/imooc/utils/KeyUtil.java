@@ -9,12 +9,13 @@ import java.util.Random;
 public class KeyUtil {
 
     /**
-     * 生成唯一的主键
+     * 1 生成唯一的主键
      * 格式: 时间+随机数
+     *
      * @return
      */
     public static synchronized String genUniqueKey() {
-        /**方法加锁，防止高并发时候的冲突*/
+        /** 2 方法加锁，防止高并发时候的冲突*/
         Random random = new Random();
         Integer number = random.nextInt(900000) + 100000;
 

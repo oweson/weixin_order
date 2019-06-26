@@ -29,7 +29,14 @@ public class BuyerServiceImpl implements BuyerService {
         /**没有问题返回对象*/
         return orderDTO;
     }
+<<<<<<< HEAD
 /** 3 判断订单是否是本人的，然胡取消操作*/
+=======
+
+    /**
+     * 2 判断订单是否是本人的，然胡取消操作
+     */
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
     @Override
     public OrderDTO cancelOrder(String openId, String orderId) {
         OrderDTO orderDTO = checkOrderOwner(openId, orderId);
@@ -51,7 +58,11 @@ public class BuyerServiceImpl implements BuyerService {
             /**判断订单是否存在*/
             return null;
         }
+<<<<<<< HEAD
         //判断是否是自己的订单
+=======
+        /**判断是否是自己的订单*/
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         if (!orderDTO.getBuyerOpenid().equalsIgnoreCase(openid)) {
             log.error("【查询订单】订单的openid不一致. openid={}, orderDTO={}", openid, orderDTO);
             throw new SellException(ResultEnum.ORDER_OWNER_ERROR);

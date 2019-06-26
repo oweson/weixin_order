@@ -16,17 +16,29 @@ public interface OrderService {
     OrderDTO create(OrderDTO orderDTO);
 
     /**
+<<<<<<< HEAD
      * 2根据订单的id查询单个订单.
+=======
+     * 2 根据订单的id查询单个订单.
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
      */
     OrderDTO findOne(String orderId);
 
     /**
+<<<<<<< HEAD
      * 3根据买家的微信id去查询订单列表.
+=======
+     * 3 根据买家的微信id去查询订单列表.
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
      */
     Page<OrderDTO> findList(String buyerOpenid, Pageable pageable);
 
     /**
+<<<<<<< HEAD
      * 4取消订单.
+=======
+     * 4 取消订单.
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
      */
     OrderDTO cancel(OrderDTO orderDTO);
 

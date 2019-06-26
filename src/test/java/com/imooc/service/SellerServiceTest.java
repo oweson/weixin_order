@@ -21,11 +21,35 @@ import static org.junit.Assert.*;
 public class SellerServiceTest {
     @Autowired
     private SellerInfoRepository repository;
+<<<<<<< HEAD
     public static final String openId="abc";
 
     @Test
     public void findSellerInfoByOpenId() {
         SellerInfo sellerInfo = repository.findByOpenid(openId);
         Assert.assertEquals(openId,sellerInfo.getOpenid());
+=======
+    @Autowired
+    private SellerService sellerService;
+    public static final String openId = "abc";
+
+    /**
+     * 1 dao测试
+     */
+    @Test
+    public void findSellerInfoByOpenId() {
+        SellerInfo sellerInfo = repository.findByOpenid(openId);
+        Assert.assertEquals(openId, sellerInfo.getOpenid());
+    }
+
+    /**
+     * 2 service测试
+     */
+    @Test
+    public void findSellerInfoByOpenIdInService() {
+        SellerInfo sellerInfoByOpenId = sellerService.findSellerInfoByOpenId(openId);
+        assertNotNull(sellerInfoByOpenId);
+
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
     }
 }

@@ -13,10 +13,14 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+<<<<<<< HEAD
 /**
  * Created by 廖师兄
  * 2017-06-11 18:30
  */
+=======
+
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 @Data
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 //@JsonInclude(JsonInclude.Include.NON_NULL)

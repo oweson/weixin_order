@@ -37,33 +37,48 @@ public class ProductCategoryRepositoryTest {
     /** 2 */
     public void testFindByCategoryListType() {
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+<<<<<<< HEAD
         /**
          * 因为一个热榜对应几个分类信息*/
+=======
+        /**因为一个热榜对应几个分类信息*/
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         List<ProductCategory> categoryByTypeIn = repository.findByCategoryTypeIn(list);
         for (ProductCategory productCategory : categoryByTypeIn) {
             System.out.println(productCategory);
 
         }
     }
+<<<<<<< HEAD
 
     /**
      * 3 查询单个
      */
+=======
+/** 3 查询单个*/
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
     @Test
     public void findOneTest() {
         ProductCategory productCategory = repository.findOne(2);
         System.out.println(productCategory.toString());
     }
+<<<<<<< HEAD
 
     /**
      * 4 测试保存，
      */
+=======
+/** 4 测试保存，*/
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
     @Test
     //@Transactional
     public void saveTest() {
 
         ProductCategory productCategory = new ProductCategory("monkey love", 10);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         ProductCategory result = repository.save(productCategory);
         Assert.assertNotNull(result);
     }
