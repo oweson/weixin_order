@@ -14,6 +14,13 @@ public interface ProductInfoRepository extends JpaRepository<ProductInfo, String
     /**
      * 主键是string
      */
+    /**
+     * 1 根据商品的状态查询商品
+     */
     List<ProductInfo> findByProductStatus(Integer productStatus);
+
+    /**
+     * 2 根据商品的类别，判断商品是否存在
+     */
     boolean existsByCategoryType(Integer categoryType);
 }

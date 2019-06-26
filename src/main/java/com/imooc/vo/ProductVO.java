@@ -13,14 +13,20 @@ import java.util.List;
  */
 @Data
 public class ProductVO {
-
+    /**
+     * 序列化为name返回前端
+     */
     @JsonProperty("name")
     private String categoryName;
 
     @JsonProperty("type")
     private Integer categoryType;
     /**
-     * 一个热榜对应多个商品的详情
+     * 一个热榜对应多个商品的详情，category_type，
+     * 处于安全需要什么返回什么；
+     */
+    /**
+     * 序列化为foods
      */
     @JsonProperty("foods")
     private List<ProductInfoVO> productInfoVOList;

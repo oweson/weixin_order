@@ -4,7 +4,6 @@ import com.imooc.dataobject.ProductCategory;
 import com.imooc.dataobject.ProductInfo;
 import com.imooc.service.CategoryService;
 import com.imooc.service.ProductService;
-import com.imooc.service.impl.ProductInfoServiceimpl;
 import com.imooc.utils.ResultVOUtil;
 import com.imooc.vo.ProductInfoVO;
 import com.imooc.vo.ProductVO;
@@ -32,9 +31,12 @@ public class BuyerProductController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * 1 查询所有上架的商品
+     */
+
     @GetMapping("/list")
     public ResultVO list() {
-        /**查询所有上架的商品*/
         List<ProductInfo> upAll = productService.findUpAll();
         /** 1 查询所有上架商品的类目，一次性的查询*/
         /**传统的查询
@@ -43,8 +45,10 @@ public class BuyerProductController {
          list.add(productInfo.getCategoryType());
          }
          categoryService.listCatogoryByCategoryIdType(list);*/
+        upAll.stream().map(e -> e.getCategoryType()).collect(Collectors.toList());
 
-        // 2 lambda表达式的写法
+        /** 2 lambda表达式的写法,
+         * collect,toList()作为list来收集*/
         List<Integer> collect = upAll.stream().map(e -> e.getCategoryType()).collect(Collectors.toList());
         List<ProductCategory> productCategories = categoryService.listCatogoryByCategoryIdType(collect);
         /** 3 拼装数据*/

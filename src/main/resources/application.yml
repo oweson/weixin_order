@@ -2,12 +2,13 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 123456
-    url: jdbc:mysql://47.94.153.206/sell?characterEncoding=utf-8&useSSL=false
+    password: root
+    url: jdbc:mysql://localhost:3306/weixin_order?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+
 #  redis:
 #    host: 47.94.153.206
 #    port: 6379
@@ -42,3 +43,5 @@ spring:
 #  wechatMpAuthorize: http://sqmax.natapp1.cc
 #  wechatOpenAuthorize: http://sqmax.natapp1.cc
 #  sell: http://sqmax.natapp1.cc
+server:
+  port: 8888

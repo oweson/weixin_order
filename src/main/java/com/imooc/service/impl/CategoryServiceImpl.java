@@ -15,20 +15,38 @@ import java.util.List;
  */
 @Service
 public class CategoryServiceImpl implements CategoryService {
+
+
     @Autowired
-
-
     ProductCategoryRepository repository;
+
+    /**
+     * 1 新增分类
+     */
+    @Override
+    public ProductCategory save(ProductCategory productCategory) {
+        return repository.save(productCategory);
+    }
+
+    /**
+     * 1 根据分类的id查询一条分类信息
+     */
     @Override
     public ProductCategory findOne(Integer categoryId) {
         return repository.findOne(categoryId);
     }
 
+    /**
+     * 2 查询所有的分类信息
+     */
     @Override
     public List<ProductCategory> findAll() {
         return repository.findAll();
     }
 
+    /**
+     * 3 查询具体的分类信息，套餐啦，热榜啦......
+     */
     @Override
     public List<ProductCategory> listCatogoryByCategoryIdType(List<Integer> list) {
         return repository.findByCategoryTypeIn(list);

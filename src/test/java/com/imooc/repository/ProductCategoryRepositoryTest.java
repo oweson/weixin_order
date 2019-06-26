@@ -27,15 +27,18 @@ public class ProductCategoryRepositoryTest {
 
     @Test
     public void updateTest() {
-        /**测试更新*/
+        /** 1 测试更新*/
         ProductCategory one = repository.findOne(2);
         one.setCategoryType(1);
         repository.save(one);
     }
 
     @Test
+    /** 2 */
     public void testFindByCategoryListType() {
         List<Integer> list = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        /**
+         * 因为一个热榜对应几个分类信息*/
         List<ProductCategory> categoryByTypeIn = repository.findByCategoryTypeIn(list);
         for (ProductCategory productCategory : categoryByTypeIn) {
             System.out.println(productCategory);
@@ -43,22 +46,26 @@ public class ProductCategoryRepositoryTest {
         }
     }
 
+    /**
+     * 3 查询单个
+     */
     @Test
     public void findOneTest() {
         ProductCategory productCategory = repository.findOne(2);
         System.out.println(productCategory.toString());
     }
 
+    /**
+     * 4 测试保存，
+     */
     @Test
     //@Transactional
     public void saveTest() {
-//        ProductCategory productCategory =repository.findOne(2);
 
-//        productCategory.setCategoryType(5);
-        ProductCategory productCategory = new ProductCategory("dog love", 10);
+        ProductCategory productCategory = new ProductCategory("monkey love", 10);
+
         ProductCategory result = repository.save(productCategory);
         Assert.assertNotNull(result);
-//        Assert.assertNotEquals(null,result);
     }
 
     @Test

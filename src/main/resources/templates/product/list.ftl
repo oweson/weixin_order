@@ -4,16 +4,17 @@
 <body>
 <div id="wrapper" class="toggled">
 
-    <#--边栏sidebar-->
+<#--边栏sidebar-->
     <#include "../common/nav.ftl">
 
-    <#--主要内容content-->
+<#--主要内容content-->
     <div id="page-content-wrapper">
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-12 column">
                     <table class="table table-bordered table-condensed">
                         <thead>
+                        <!--少了一些的字段-->
                         <tr>
                             <th>商品id</th>
                             <th>名称</th>
@@ -33,6 +34,7 @@
                         <tr>
                             <td>${productInfo.productId}</td>
                             <td>${productInfo.productName}</td>
+                            <!--图片设置宽和高防止图片过大不好看-->
                             <td><img height="100" width="100" src="${productInfo.productIcon}" alt=""></td>
                             <td>${productInfo.productPrice}</td>
                             <td>${productInfo.productStock}</td>
@@ -42,6 +44,7 @@
                             <td>${productInfo.updateTime}</td>
                             <td><a href="/sell/seller/product/index?productId=${productInfo.productId}">修改</a></td>
                             <td>
+                                <!--如果在架子的话就显示下架-->
                                 <#if productInfo.getProductStatusEnum().message == "在架">
                                     <a href="/sell/seller/product/off_sale?productId=${productInfo.productId}">下架</a>
                                 <#else>
