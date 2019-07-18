@@ -33,12 +33,6 @@ public class SellerUserController {
     private StringRedisTemplate redisTemplate;
 
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
     @GetMapping("/logout")
     public ModelAndView logout(HttpServletRequest request,
                                HttpServletResponse response,

@@ -29,9 +29,7 @@ public class ProductInfoServiceimpl implements ProductService {
      * 1 增加库存
      */
     @Override
-<<<<<<< HEAD
     public void increaseStock(List<CartDTO> cartDTOList) {
-=======
     @Transactional
     public void increaseStock(List<CartDTO> cartDTOList) {
         for (CartDTO cartDTO: cartDTOList) {
@@ -44,7 +42,6 @@ public class ProductInfoServiceimpl implements ProductService {
 
             repository.save(productInfo);
         }
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 
     }
 
@@ -57,48 +54,23 @@ public class ProductInfoServiceimpl implements ProductService {
             if (productInfo == null) {
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
-<<<<<<< HEAD
 
-=======
             /**查看库存是否足够*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
             Integer result = productInfo.getProductStock() - cartDTO.getProductQuantity();
             if (result < 0) {
                 throw new SellException(ResultEnum.PRODUCT_STOCK_ERROR);
             }
-<<<<<<< HEAD
 /**把新的库存写入数据库*/
             productInfo.setProductStock(result);
 /**为何保存？？？？？*/
-=======
           /**把新的库存写入数据库*/
             productInfo.setProductStock(result);
             /**重新入库，更改数量*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
             repository.save(productInfo);
         }
     }
 
-    /**
-     * 3 修改商品的状态为上架状态
-     */
-    @Override
-    public ProductInfo onSale(String productId) {
-        ProductInfo productInfo = repository.findOne(productId);
-        if (productInfo == null) {
-            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
 
-        }
-        /**已经上架了不允许修改*/
-        if (productInfo.getProductStatusEnum() == ProductStatusEnum.UP) {
-            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
-
-        }
-        /**更新，吧商品从下架修改为上架状态*/
-        productInfo.setProductStatus(ProductStatusEnum.UP.getCode());
-        return repository.save(productInfo);
-
-    }
 
     /**
      * 4 修改商品的状态，上架修改为下架

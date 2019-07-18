@@ -74,11 +74,8 @@ public class SellerProductController {
             /**错误的页面，并携带错误的提示信息和url商品的列表url*/
             return new ModelAndView("common/error", map);
         }
-<<<<<<< HEAD
 /**成功了，商品的列表页*/
-=======
         /**成功了，商品的列表页*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         map.put("url", "/sell/seller/product/list");
         return new ModelAndView("common/success", map);
     }

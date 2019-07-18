@@ -28,10 +28,8 @@ import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-<<<<<<< HEAD
-=======
+
 import java.util.ArrayList;
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,10 +60,7 @@ public class OrderServiceImpl implements OrderService {
         String orderId = KeyUtil.genUniqueKey();
         /**0 初始化总价*/
         BigDecimal orderAmount = new BigDecimal(BigInteger.ZERO);
-<<<<<<< HEAD
-=======
         List<CartDTO> cartDTOS = new ArrayList<>();
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         /** 1 查询商品数量，总价*/
         for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
             /** 遍历订单里面的商品详情集合,
@@ -77,7 +72,6 @@ public class OrderServiceImpl implements OrderService {
             }
             /** 2 计算总价,商品详情里面有对应的商品的数据；
              * 用productInfo，detail传入的只有很少的值，有的为null*/
-<<<<<<< HEAD
             orderAmount = productInfo.getProductPrice().multiply(new BigDecimal(orderDetail.getProductQuantity())).add(orderAmount
             );
             /** 3 订单详情入库*/
@@ -95,7 +89,6 @@ public class OrderServiceImpl implements OrderService {
             BeanUtils.copyProperties(productInfo, orderDetail);
             /**设置订单详情的id*/
             orderDetail.setDetailId(KeyUtil.genUniqueKey());
-<<<<<<< HEAD
             /**一个订单的id对应多个订单项,订单项不仅仅订单项的id还要订单的id,
 =======
             /**一个订单的id对应多个订单项,订单项不仅仅订单项的id还要--------订单的id,
@@ -107,11 +100,8 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setOrderId(orderId);
             /**订单项入库*/
             orderDetailRepository.save(orderDetail);
-<<<<<<< HEAD
-=======
            /*方案一： CartDTO cartDTO  =new CartDTO(orderDetail.getProductId(),orderDetail.getProductQuantity());
             cartDTOS.add(cartDTO);*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
 
 
         }
@@ -125,13 +115,11 @@ public class OrderServiceImpl implements OrderService {
         orderMaster.setOrderStatus(OrderStatusEnum.NEW.getCode());
         orderMaster.setPayStatus(PayStatusEnum.WAIT.getCode());
         orderMasterRepository.save(orderMaster);
-<<<<<<< HEAD
         /**4 减库存
          * 集合指向结果，简介的代码？？？？？，，，*/
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
                 new CartDTO(e.getProductId(), e.getProductQuantity())
         ).collect(Collectors.toList());
-=======
         /**5 减库存
          * 集合指向结果，扣除库存放在外面*/
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
@@ -140,41 +128,30 @@ public class OrderServiceImpl implements OrderService {
         //todo ???怎么减掉的库存
        /* orderDTO.getOrderDetailList().stream()
                 .map(e->new CartDTO(e.getProductId(),e.getProductQuantity())).collect(Collectors.toList());*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         productService.decreaseStock(cartDTOList);
         return orderDTO;
     }
 
     /**
-<<<<<<< HEAD
      * 2 根据订单的id查询订单，返回多个订单的详情
      */
     @Override
     public OrderDTO findOne(String orderId) {
-=======
-     * 2 根据订单的id查询订单，返回多个订单项的详情
-     */
-    @Override
-    public OrderDTO findOne(String orderId) {
         /**查出订单*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         OrderMaster orderMaster = orderMasterRepository.findOne(orderId);
         if (orderMaster == null) {
             /**判断订单是否存在*/
             throw new SellException(ResultEnum.ORDER_NOT_EXIST);
         }
-<<<<<<< HEAD
         /**订单项根据订单的查询订单详情，一个订单的id对应一个或者多个订单详情的id*/
         List<OrderDetail> byOrderId = orderDetailRepository.findByOrderId(orderId);
         OrderDTO orderDTO = new OrderDTO();
         BeanUtils.copyProperties(orderMaster, orderDTO);
-=======
         /**订单项:根据订单的id查询订单详情的集合，一个订单的id对应一个或者多个订单详情的id*/
         List<OrderDetail> byOrderId = orderDetailRepository.findByOrderId(orderId);
         OrderDTO orderDTO = new OrderDTO();
         BeanUtils.copyProperties(orderMaster, orderDTO);
         /**设置订单项的集合到订单vo*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         orderDTO.setOrderDetailList(byOrderId);
         /**返回orderDTO里面包很多的订单详情*/
         return orderDTO;
@@ -188,10 +165,7 @@ public class OrderServiceImpl implements OrderService {
         /**不需要判断，找到就返回，找不到返回空*/
         /**??????????????*/
         List<OrderDTO> orderDTOList = OrderMaster2OrderDtoConverter.convert(orderMasterPage.getContent());
-<<<<<<< HEAD
-=======
         /**数据，分页，总的数据*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         return new PageImpl<>(orderDTOList, pageable, orderMasterPage.getTotalElements());
     }
 
@@ -205,11 +179,8 @@ public class OrderServiceImpl implements OrderService {
         if (!orderDTO.getOrderStatus().equals(OrderStatusEnum.NEW.getCode())) {
             throw new SellException(ResultEnum.ORDER_STATUS_ERROR);
         }
-<<<<<<< HEAD
 /** 2 修改订单的状态，*/
-=======
          /** 2 修改订单的状态，*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         orderDTO.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
         BeanUtils.copyProperties(orderMaster, orderDTO);
 
@@ -243,10 +214,8 @@ public class OrderServiceImpl implements OrderService {
         orderDTO.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
         OrderMaster orderMaster = new OrderMaster();
         BeanUtils.copyProperties(orderDTO, orderMaster);
-<<<<<<< HEAD
-=======
+
         /** 订单入库，状态改变*/
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
         OrderMaster updateResult = orderMasterRepository.save(orderMaster);
         if (updateResult == null) {
             log.error("【完结订单】更新失败, orderMaster={}", orderMaster);

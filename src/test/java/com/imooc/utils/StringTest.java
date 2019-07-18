@@ -5,7 +5,7 @@ package com.imooc.utils;
  *
  * @Date：2018/10/6 0006 16:58
  */
-public class TestString {
+public class StringTest {
     public static void main(String[] args) {
         String s = "hello,world";
         /** 1 转化为字符数组*/

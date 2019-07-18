@@ -33,7 +33,6 @@ public class CategoryServiceImpl implements CategoryService {
      * 1 根据分类的id查询一条分类信息
 =======
      * 2 根据分类的id查询一条分类信息
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
      */
     @Override
     public ProductCategory findOne(Integer categoryId) {
@@ -45,7 +44,6 @@ public class CategoryServiceImpl implements CategoryService {
      * 2 查询所有的分类信息
 =======
      * 3 查询所有的分类信息
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
      */
     @Override
     public List<ProductCategory> findAll() {
@@ -53,11 +51,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     /**
-<<<<<<< HEAD
      * 3 查询具体的分类信息，套餐啦，热榜啦......
 =======
      * 4 查询具体的分类信息，套餐啦，热榜啦......
->>>>>>> 5fd7457610e704a4c1cc6cbd6deef03a264b3944
      */
     @Override
     public List<ProductCategory> listCatogoryByCategoryIdType(List<Integer> list) {

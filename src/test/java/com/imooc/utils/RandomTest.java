@@ -7,7 +7,7 @@ import java.util.Random;
  *
  * @Date：2018/10/6 0006 16:54
  */
-public class TestRandom {
+public class RandomTest {
     /**
      * 加上同步，多线程下的安全
      */
