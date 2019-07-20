@@ -74,7 +74,8 @@ public class BuyerProductController {
             for (ProductInfo productInfo:productInfoList){
                 if(productInfo.getCategoryType().equals(productCategory.getCategoryType())){
                     ProductInfoVO productInfoVO = new ProductInfoVO();
-                    BeanUtils.copyProperties(productInfo,productInfoVO);//Spring中的拷贝工具类，能把一样的属性的属性值拷贝过去
+                    BeanUtils.copyProperties(productInfo,productInfoVO);
+                    //Spring中的拷贝工具类，能把一样的属性的属性值拷贝过去
                     productInfoVOList.add(productInfoVO);
                 }
             }

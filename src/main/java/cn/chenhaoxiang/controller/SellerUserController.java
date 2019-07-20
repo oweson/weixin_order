@@ -31,7 +31,8 @@ import java.util.concurrent.TimeUnit;
  * Time: 下午 7:27.
  * Explain: 卖家用户相关操作
  */
-@Controller //涉及到页面跳转。不用@RestController
+@Controller
+//涉及到页面跳转。不用@RestController
 @RequestMapping("/seller")
 public class SellerUserController {
 
@@ -42,54 +43,58 @@ public class SellerUserController {
     private StringRedisTemplate stringRedisTemplate;
     @Autowired
     private ProjectUrlConfig projectUrlConfig;
+
     /**
-     * 登录
+     * 1 登录
+     *
      * @param openid
      */
     @GetMapping("/login")
     public ModelAndView login(@RequestParam("openid") String openid,
                               HttpServletResponse response,
-                              Map<String,Object> map){
+                              Map<String, Object> map) {
         //1.openid去和数据库里的数据匹配
         SellerInfo sellerInfo = sellerService.findSellerInfoByOpenid(openid);
         //TODO 未考虑新增的情况，也就是用户微信扫码登录不存在openid的情况下
-        if(sellerInfo==null){
+        if (sellerInfo == null) {
             map.put("msg", ResultEnum.LOGIN_FAIL.getMessage());
-            map.put("url","/seller/order/list");
-            return new ModelAndView("common/error",map);
+            map.put("url", "/seller/order/list");
+            return new ModelAndView("common/error", map);
         }
         //2.设置token至Redis
-//        stringRedisTemplate.opsForValue().set("abc","122");//操作某些value 写入key-value
-        String token= UUID.randomUUID().toString();
-        stringRedisTemplate.opsForValue().set(String.format(RedisConstans.TOKEN_PREFIX,token),openid,RedisConstans.EXPIPE, TimeUnit.SECONDS);//key,value,过期时间,时间单位 s
+//   stringRedisTemplate.opsForValue().set("abc","122");
+//  操作某些value 写入key-value
+        String token = UUID.randomUUID().toString();
+        stringRedisTemplate.opsForValue().set(String.format(RedisConstans.TOKEN_PREFIX, token), openid, RedisConstans.EXPIPE, TimeUnit.SECONDS);//key,value,过期时间,时间单位 s
 
         //3.设置token至cookie
-        CookieUtil.set(response, CookieConstant.TOKEN,token,CookieConstant.EXPIPE);
+        CookieUtil.set(response, CookieConstant.TOKEN, token, CookieConstant.EXPIPE);
         //做一个跳转获取订单列表后再跳转 重定向不要带项目名 - 最好带绝对地址 也就是带http://的绝对地址
-        return new ModelAndView("redirect:"+projectUrlConfig.getProject()+"/seller/order/list");
+        return new ModelAndView("redirect:" + projectUrlConfig.getProject() + "/seller/order/list");
     }
 
     /**
-     * 登出
+     * 2 登出
+     *
      * @param request
      * @param response
      * @param map
      */
     @GetMapping("/logout")
     public ModelAndView logout(HttpServletRequest request,
-                       HttpServletResponse response,
-                       Map<String,Object> map){
+                               HttpServletResponse response,
+                               Map<String, Object> map) {
         //1.从Cookie查询
-        Cookie cookie =CookieUtil.get(request,CookieConstant.TOKEN);
-        if(cookie!=null){
+        Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
+        if (cookie != null) {
             //2.清除redis
-            stringRedisTemplate.opsForValue().getOperations().delete(String.format(RedisConstans.TOKEN_PREFIX,cookie.getValue()));
+            stringRedisTemplate.opsForValue().getOperations().delete(String.format(RedisConstans.TOKEN_PREFIX, cookie.getValue()));
             //3.清除cookie
-            CookieUtil.del(response,CookieConstant.TOKEN);
+            CookieUtil.del(response, CookieConstant.TOKEN);
         }
-        map.put("msg",ResultEnum.LOGOUT_SUCCESS.getMessage());
-        map.put("url","/seller/order/list");
-        return new ModelAndView("common/success",map);
+        map.put("msg", ResultEnum.LOGOUT_SUCCESS.getMessage());
+        map.put("url", "/seller/order/list");
+        return new ModelAndView("common/success", map);
     }
 
 }

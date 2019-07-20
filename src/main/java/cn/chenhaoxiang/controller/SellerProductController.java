@@ -43,81 +43,92 @@ public class SellerProductController {
     private ProductInfoService productInfoService;
     @Autowired
     private ProductCategoryService productCategoryService;
+
+    /**
+     * 1 商品列表
+     */
     @GetMapping("/list")
-    public ModelAndView list(@RequestParam(value = "page",defaultValue = "1")Integer page,
-                             @RequestParam(value = "size",defaultValue = "10")Integer size,
-                             Map<String,Object> map){//map - freemarker模板数据返回到页面
-        PageRequest pageRequest = new PageRequest(page-1,size);
+    public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                             @RequestParam(value = "size", defaultValue = "10") Integer size,
+                             Map<String, Object> map) {//map - freemarker模板数据返回到页面
+        PageRequest pageRequest = new PageRequest(page - 1, size);
         Page<ProductInfo> productInfoPage = productInfoService.findAll(pageRequest);
-        map.put("productInfoPage",productInfoPage);
-        map.put("currentPage",page);//当前页
-        map.put("size",size);//一页有多少数据
-        return new ModelAndView("product/list",map);
+        map.put("productInfoPage", productInfoPage);
+        map.put("currentPage", page);
+        //当前页
+        map.put("size", size);
+        //一页有多少数据
+        return new ModelAndView("product/list", map);
     }
 
     /**
-     * 上架商品
+     * 2 上架商品
+     *
      * @param productId
      * @param map
      * @return
      */
     @GetMapping("/onSale")
-    public ModelAndView onSale(@RequestParam(value = "productId")String productId,
-                             Map<String,Object> map){//map - freemarker模板数据返回到页面
+    public ModelAndView onSale(@RequestParam(value = "productId") String productId,
+                               Map<String, Object> map) {
+        //map - freemarker模板数据返回到页面
         try {
             productInfoService.onSale(productId);
-        }catch(SellException e){
-            map.put("msg",e.getMessage());
-            map.put("url","/seller/product/list");
-            return new ModelAndView("common/error",map);
+        } catch (SellException e) {
+            map.put("msg", e.getMessage());
+            map.put("url", "/seller/product/list");
+            return new ModelAndView("common/error", map);
         }
         map.put("msg", ResultEnum.PRODUCT_ONSALE_SUCCESS.getMessage());
-        map.put("url","/seller/product/list");
-        return new ModelAndView("common/success",map);
+        map.put("url", "/seller/product/list");
+        return new ModelAndView("common/success", map);
     }
 
     /**
-     * 下架商品
+     * 3 下架商品
+     *
      * @param productId
      * @param map
      * @return
      */
     @GetMapping("/offSale")
-    public ModelAndView offSale(@RequestParam(value = "productId")String productId,
-                               Map<String,Object> map){//map - freemarker模板数据返回到页面
+    public ModelAndView offSale(@RequestParam(value = "productId") String productId,
+                                Map<String, Object> map) {//map - freemarker模板数据返回到页面
         try {
             productInfoService.offSale(productId);
-        }catch(SellException e){
-            map.put("msg",e.getMessage());
-            map.put("url","/seller/product/list");
-            return new ModelAndView("common/error",map);
+        } catch (SellException e) {
+            map.put("msg", e.getMessage());
+            map.put("url", "/seller/product/list");
+            return new ModelAndView("common/error", map);
         }
         map.put("msg", ResultEnum.PRODUCT_OFFSALE_SUCCESS.getMessage());
-        map.put("url","/seller/product/list");
-        return new ModelAndView("common/success",map);
+        map.put("url", "/seller/product/list");
+        return new ModelAndView("common/success", map);
     }
 
     /**
-     * 商品信息编辑
+     * 4 商品信息编辑
+     *
      * @param productId
      * @param map
      * @return
      */
     @GetMapping("/index")
-    public ModelAndView index(@RequestParam(value = "productId",required = false)String productId,//非必传
-                                Map<String,Object> map){//map - freemarker模板数据返回到页面
-        if(!StringUtils.isEmpty(productId)){
+    public ModelAndView index(@RequestParam(value = "productId", required = false) String productId,//非必传
+                              Map<String, Object> map) {//map - freemarker模板数据返回到页面
+        if (!StringUtils.isEmpty(productId)) {
             ProductInfo productInfo = productInfoService.findOne(productId);
-            map.put("productInfo",productInfo);
+            map.put("productInfo", productInfo);
         }
         //查询所有类目
-        List<ProductCategory> productCategoryList=productCategoryService.findAll();
-        map.put("productCategoryList",productCategoryList);
-        return new ModelAndView("product/index",map);
+        List<ProductCategory> productCategoryList = productCategoryService.findAll();
+        map.put("productCategoryList", productCategoryList);
+        return new ModelAndView("product/index", map);
     }
 
     /**
-     * 保存/更新商品
+     * 5 保存/更新商品
+     *
      * @param productForm
      * @param bindingResult
      * @param map
@@ -130,30 +141,30 @@ public class SellerProductController {
     // 这种注解和原来对应的返回对象需要是相同的才行，这里返回的是ModelAndView。可以到service层注解或者dao层注解CachePut
     public ModelAndView save(@Valid ProductForm productForm,
                              BindingResult bindingResult,
-                             Map<String,Object> map){
-        if(bindingResult.hasErrors()){
-            map.put("msg",bindingResult.getFieldError().getDefaultMessage());
-            map.put("url","/seller/product/index");
-            return new ModelAndView("common/error",map);
+                             Map<String, Object> map) {
+        if (bindingResult.hasErrors()) {
+            map.put("msg", bindingResult.getFieldError().getDefaultMessage());
+            map.put("url", "/seller/product/index");
+            return new ModelAndView("common/error", map);
         }
         ProductInfo productInfo = new ProductInfo();
         //TODO 类目编号不能重复，如果是新增，需要类目编号之前不存在。如果是修改，需要排除当前id的类目，其他类目不存在该类目编号
         try {
             //新增商品  productForm.getProductId 为空
-            if(StringUtils.isEmpty(productForm.getProductId())){
+            if (StringUtils.isEmpty(productForm.getProductId())) {
                 productForm.setProductId(KeyUtil.getUniqueKey());
-            }else {
+            } else {
                 productInfo = productInfoService.findOne(productForm.getProductId());
             }
-            BeanUtils.copyProperties(productForm,productInfo);//拷贝函数
+            BeanUtils.copyProperties(productForm, productInfo);//拷贝函数
             productInfoService.save(productInfo);
-        }catch (SellException e){
-            map.put("msg",e.getMessage());
-            map.put("url","/seller/product/index");
-            return new ModelAndView("common/error",map);
+        } catch (SellException e) {
+            map.put("msg", e.getMessage());
+            map.put("url", "/seller/product/index");
+            return new ModelAndView("common/error", map);
         }
-        map.put("url","/seller/product/list");
-        return new ModelAndView("common/success",map);
+        map.put("url", "/seller/product/list");
+        return new ModelAndView("common/success", map);
     }
 
 }

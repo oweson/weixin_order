@@ -33,36 +33,39 @@ public class SellerCategoryController {
     private ProductCategoryService productCategoryService;
 
     /**
-     * 类目列表
+     * 1 类目列表
+     *
      * @param map
      * @return
      */
     @GetMapping("list")
-    public ModelAndView list(Map<String,Object> map){
-        List<ProductCategory> productCategoryList =productCategoryService.findAll();
-        map.put("productCategoryList",productCategoryList);
-        return new ModelAndView("category/list",map);
+    public ModelAndView list(Map<String, Object> map) {
+        List<ProductCategory> productCategoryList = productCategoryService.findAll();
+        map.put("productCategoryList", productCategoryList);
+        return new ModelAndView("category/list", map);
     }
 
     /**
-     * 修改类目
+     * 2 修改类目
+     *
      * @param categoryId
      * @param map
      * @return
      */
     @GetMapping("index")
-    public ModelAndView index(@RequestParam(value = "categoryId",required = false)Integer categoryId,
-                              Map<String,Object> map){
-        if(categoryId!=null&&categoryId > 0){
+    public ModelAndView index(@RequestParam(value = "categoryId", required = false) Integer categoryId,
+                              Map<String, Object> map) {
+        if (categoryId != null && categoryId > 0) {
             //查询类目
             ProductCategory productCategory = productCategoryService.findOne(categoryId);
-            map.put("productCategory",productCategory);
+            map.put("productCategory", productCategory);
         }
-        return new ModelAndView("category/index",map);
+        return new ModelAndView("category/index", map);
     }
 
     /**
-     * 增加/修改类目
+     * 3 增加/修改类目
+     *
      * @param productCategoryForm
      * @param bindingResult
      * @param map
@@ -70,27 +73,29 @@ public class SellerCategoryController {
      */
     @PostMapping("save")
     public ModelAndView save(@Valid ProductCategoryForm productCategoryForm,
-                              BindingResult bindingResult,
-                              Map<String,Object> map){
-        if(bindingResult.hasErrors()){
-            map.put("msg",bindingResult.getFieldError().getDefaultMessage());
-            map.put("url","/seller/category/index");
-            return new ModelAndView("common/error",map);
+                             BindingResult bindingResult,
+                             Map<String, Object> map) {
+        if (bindingResult.hasErrors()) {
+            map.put("msg", bindingResult.getFieldError().getDefaultMessage());
+            map.put("url", "/seller/category/index");
+            return new ModelAndView("common/error", map);
         }
         ProductCategory productCategory = new ProductCategory();
         try {
-            if(productCategoryForm.getCategoryId()!=null){
+            if (productCategoryForm.getCategoryId() != null) {
+                // 修改！
                 productCategory = productCategoryService.findOne(productCategoryForm.getCategoryId());
             }
-            BeanUtils.copyProperties(productCategoryForm,productCategory);
+            // 新增
+            BeanUtils.copyProperties(productCategoryForm, productCategory);
             productCategoryService.save(productCategory);
-        }catch (SellException e){
-            map.put("msg",e.getMessage());
-            map.put("url","/seller/category/index");
-            return new ModelAndView("common/error",map);
+        } catch (SellException e) {
+            map.put("msg", e.getMessage());
+            map.put("url", "/seller/category/index");
+            return new ModelAndView("common/error", map);
         }
-        map.put("url","/seller/category/list");
-        return new ModelAndView("common/success",map);
+        map.put("url", "/seller/category/list");
+        return new ModelAndView("common/success", map);
     }
 
 }
