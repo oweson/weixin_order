@@ -1,7 +1,7 @@
 <html>
 <head>
-    <meta charset="utf-8">
-    <title>成功提示！</title>
+    <meta charset="UTF-8">
+    <title>成功提示</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.0.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -10,18 +10,18 @@
         <div class="col-md-12 column">
             <div class="alert alert-dismissable alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <!--设置模版的默认值，为空，否则拿不到就会模版异常-->
                 <h4>
-                    成功!
-                </h4> <strong>${msg!""}</strong><a href="${url}" class="alert-link">3s后自动跳转</a>
+                    注意!
+                    <#--如果模板的msg没有值，就给一个默认值-->
+                </h4> <strong>${msg!"操作成功"}</strong> <a href="${url}" class="alert-link">3s后自动跳转</a>
             </div>
         </div>
     </div>
 </div>
 </body>
 <script>
-    /*      <!--定时3秒后跳转-->
- */
-    setTimeout('location.href="${url}"', 3000);
+    setTimeout('location.href="${url}"',3000);
 </script>
+
 </html>
+

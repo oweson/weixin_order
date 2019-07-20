@@ -1,73 +1,69 @@
 <html>
 <#include "../common/header.ftl">
-
 <body>
+
 <div id="wrapper" class="toggled">
-
 <#--边栏sidebar-->
-    <#include "../common/nav.ftl">
-
-<#--主要内容content-->
+<#include "../common/nav.ftl">
+<#--主要内容区域-->
     <div id="page-content-wrapper">
+    <#--fluid-流动布局-->
         <div class="container-fluid">
+
             <div class="row clearfix">
                 <div class="col-md-12 column">
-                    <form role="form" method="post" action="/sell/seller/product/save">
+                    <form role="form" method="post" action="/seller/product/save">
                         <div class="form-group">
                             <label>名称</label>
-                            <!--处理对象防止为空加括号（）-->
-                            <input name="productName" class="form-control" type="text"
-                                   value="${(productInfo.productName)!''}"/>
+                            <input name="productName" type="text" class="form-control" value="${(productInfo.productName)!''}"/>
                         </div>
+
                         <div class="form-group">
                             <label>价格</label>
-                            <input name="productPrice" type="text" class="form-control"
-                                   value="${(productInfo.productPrice)!''}"/>
+                            <input name="productPrice" type="text" class="form-control" value="${(productInfo.productPrice)!''}"/>
                         </div>
                         <div class="form-group">
                             <label>库存</label>
-                            <input name="productStock" type="number" class="form-control"
-                                   value="${(productInfo.productStock)!''}"/>
+                            <input name="productStock" type="number" class="form-control" value="${(productInfo.productStock)!''}"/>
                         </div>
                         <div class="form-group">
                             <label>描述</label>
-                            <input name="productDescription" type="text" class="form-control"
-                                   value="${(productInfo.productDescription)!''}">
+                            <input name="productDescription" type="text" class="form-control" value="${(productInfo.productDescription)!''}"/>
                         </div>
                         <div class="form-group">
                             <label>图片</label>
-                            <!--设置合适的图片大小-->
-                            <img height="100" width="100" src="${(productInfo.productIcon)!''}" alt="">
-                            <input name="productIcon" type="text" class="form-control"
-                                   value="${(productInfo.productIcon)!''}"/>
+                            <img width="200" height="200" src="${(productInfo.productIcon)!''}">
+                            <input name="productIcon" type="text" class="form-control" value="${(productInfo.productIcon)!''}"/>
                         </div>
+
                         <div class="form-group">
                             <label>类目</label>
                             <select name="categoryType" class="form-control">
-                                <#list categoryList as category>
-                                    <!--value 对应数据库的值，name只是显示看看而已，value对应，1，2，3入库-->
-                                    <option value="${(category.categoryType)}"
-                                            <#if (productInfo.categoryType)?? && productInfo.categoryType==category.categoryType>
-                                            <!--这里的判断为了加上seected关键字；
-                                            默认选择以前的类目-->
-                                                selected
-                                            </#if>>
-                                    ${category.categoryName}
+                                <#list productCategoryList as productCategory>
+                                    <#--商品类目存在 (productInfo.categoryType)?? -->
+                                    <option value="${productCategory.categoryType}"
+                                    <#if (productInfo.categoryType)?? && productInfo.categoryType==productCategory.categoryType>
+                                        selected
+                                    </#if>
+                                    >
+                                    ${productCategory.categoryName}
                                     </option>
                                 </#list>
-
                             </select>
                         </div>
-                        <!--隐藏的字段productId不需要显示，但是更新需要知道更新的是哪个-->
-                        <input hidden type="text" name="productId" value="${(productInfo.productId)!''}">
 
+                        <#--加个隐藏的字段-->
+                        <input hidden type="text" name="productId" value="${(productInfo.productId)!''}">
                         <button type="submit" class="btn btn-default">提交</button>
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
-
 </div>
+
 </body>
+
 </html>
+
