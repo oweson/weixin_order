@@ -9,12 +9,13 @@ package cn.chenhaoxiang.constans;
  */
 public interface RedisConstans {
     /**
-     * token前缀
+     * 1 token前缀
      */
-    String TOKEN_PREFIX="token_%s";
+    String TOKEN_PREFIX = "token_%s";
     /**
-     * 过期时间
+     * 2 过期时间
      */
-    Integer EXPIPE = 7200; //单位s
+    Integer EXPIPE = 7200;
+    //单位s
 
 }

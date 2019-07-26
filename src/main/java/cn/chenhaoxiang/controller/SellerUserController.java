@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * Explain: 卖家用户相关操作
  */
 @Controller
-//涉及到页面跳转。不用@RestController
+// 涉及到页面跳转。不用@RestController
 @RequestMapping("/seller")
 public class SellerUserController {
 
@@ -61,11 +61,11 @@ public class SellerUserController {
             map.put("url", "/seller/order/list");
             return new ModelAndView("common/error", map);
         }
-        //2.设置token至Redis
-//   stringRedisTemplate.opsForValue().set("abc","122");
-//  操作某些value 写入key-value
+        /**2.设置token至Redis stringRedisTemplate.opsForValue().set("abc","122")操作某些value
+         *  写入key-value*/
         String token = UUID.randomUUID().toString();
-        stringRedisTemplate.opsForValue().set(String.format(RedisConstans.TOKEN_PREFIX, token), openid, RedisConstans.EXPIPE, TimeUnit.SECONDS);//key,value,过期时间,时间单位 s
+        stringRedisTemplate.opsForValue().set(String.format(RedisConstans.TOKEN_PREFIX, token), openid, RedisConstans.EXPIPE, TimeUnit.SECONDS);
+        //key,value,过期时间,时间单位 s
 
         //3.设置token至cookie
         CookieUtil.set(response, CookieConstant.TOKEN, token, CookieConstant.EXPIPE);

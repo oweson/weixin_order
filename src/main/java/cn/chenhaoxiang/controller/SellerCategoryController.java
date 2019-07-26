@@ -75,6 +75,8 @@ public class SellerCategoryController {
     public ModelAndView save(@Valid ProductCategoryForm productCategoryForm,
                              BindingResult bindingResult,
                              Map<String, Object> map) {
+        /*这里一个@Valid的参数后必须紧挨着一个BindingResult 参数，否则spring会在校验不通过时直接抛出异常，
+        BindingResult是springmvc的一个验证框架。*/
         if (bindingResult.hasErrors()) {
             map.put("msg", bindingResult.getFieldError().getDefaultMessage());
             map.put("url", "/seller/category/index");
@@ -83,10 +85,10 @@ public class SellerCategoryController {
         ProductCategory productCategory = new ProductCategory();
         try {
             if (productCategoryForm.getCategoryId() != null) {
-                // 修改！
+                // 1 修改！
                 productCategory = productCategoryService.findOne(productCategoryForm.getCategoryId());
             }
-            // 新增
+            // 2 新增
             BeanUtils.copyProperties(productCategoryForm, productCategory);
             productCategoryService.save(productCategory);
         } catch (SellException e) {

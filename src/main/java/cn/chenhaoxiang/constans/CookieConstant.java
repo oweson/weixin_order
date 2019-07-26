@@ -10,11 +10,11 @@ package cn.chenhaoxiang.constans;
 public interface CookieConstant {
 
     /**
-     * token的Cookie name
+     * 1 token的Cookie name
      */
     String TOKEN = "token";
     /**
-     * 过期时间
+     * 2 过期时间
      * 单位：s
      */
     Integer EXPIPE = 7200;
