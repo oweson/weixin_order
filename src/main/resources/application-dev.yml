@@ -14,8 +14,10 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: root
-    url: jdbc:mysql://127.0.0.1/weixin_order?characterEncoding=utf-8&userSSL=false
+    password: 123456
+    #url: jdbc:mysql://127.0.0.1/weixin_order?characterEncoding=utf-8&userSSL=false
+    url: jdbc:mysql://47.94.153.206:3307/weixin_order?characterEncoding=utf-8&userSSL=false
+
   jpa:
   # 打印SQL
     show-sql: true
@@ -54,3 +56,10 @@ mybatis:
 logging:
   level:
     cn.chenhaoxiang: debug
+
+
+
+
+
+server:
+  port: 8082

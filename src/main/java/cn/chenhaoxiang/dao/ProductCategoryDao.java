@@ -15,9 +15,10 @@ import java.util.List;
 public interface ProductCategoryDao extends JpaRepository<ProductCategory,Integer>{//后面的是主键类型
 
     /**
-     * 通过categoryType集合 查询出ProductCategory集合
+     * 1 通过categoryType集合 查询出ProductCategory集合
      * @param categoryTypeList
      * @return
      */
     List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeList);
+
 }

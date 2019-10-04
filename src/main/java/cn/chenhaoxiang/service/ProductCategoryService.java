@@ -14,26 +14,31 @@ import java.util.List;
 public interface ProductCategoryService {
 
     /**
-     * 查询一个
+     * 1 查询一个
+     *
      * @param categoryId
      * @return
      */
     ProductCategory findOne(Integer categoryId);
 
     /**
-     * 查询所有
+     * 2 查询所有
+     *
      * @return
      */
     List<ProductCategory> findAll();
+
     /**
-     * 通过categoryType集合 查询出ProductCategory集合
+     * 3 通过categoryType集合 查询出ProductCategory集合
+     *
      * @param categoryTypeList
      * @return
      */
     List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeList);
 
     /**
-     * 更新和新增
+     * 4 更新和新增
+     *
      * @param productCategory
      * @return
      */

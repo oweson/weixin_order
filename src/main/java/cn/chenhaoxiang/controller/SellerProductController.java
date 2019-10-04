@@ -51,14 +51,14 @@ public class SellerProductController {
     public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                              @RequestParam(value = "size", defaultValue = "10") Integer size,
                              Map<String, Object> map) {
-        //map - freemarker模板数据返回到页面
+        // 1 map - freemarker模板数据返回到页面
         PageRequest pageRequest = new PageRequest(page - 1, size);
         Page<ProductInfo> productInfoPage = productInfoService.findAll(pageRequest);
         map.put("productInfoPage", productInfoPage);
         map.put("currentPage", page);
-        //当前页
+        // 2 当前页
         map.put("size", size);
-        //一页有多少数据
+        // 3 一页有多少数据
         return new ModelAndView("product/list", map);
     }
 
@@ -72,7 +72,7 @@ public class SellerProductController {
     @GetMapping("/onSale")
     public ModelAndView onSale(@RequestParam(value = "productId") String productId,
                                Map<String, Object> map) {
-        //map - freemarker模板数据返回到页面
+        // 1 map - freemarker模板数据返回到页面
         try {
             productInfoService.onSale(productId);
         } catch (SellException e) {
@@ -109,7 +109,8 @@ public class SellerProductController {
     }
 
     /**
-     * 4 商品信息编辑
+     * 4 商品信息编辑;
+     * 回显；
      *
      * @param productId
      * @param map
@@ -118,7 +119,7 @@ public class SellerProductController {
     @GetMapping("/index")
     public ModelAndView index(@RequestParam(value = "productId", required = false) String productId,//非必传
                               Map<String, Object> map) {
-        // 1 map - freemarker模板数据返回到页面
+        // 1 map - freemarker模板数据返回到页面，参数校验非空，null
         if (!StringUtils.isEmpty(productId)) {
             ProductInfo productInfo = productInfoService.findOne(productId);
             map.put("productInfo", productInfo);
@@ -139,12 +140,12 @@ public class SellerProductController {
      */
     @PostMapping("/save")
 /**@CacheEvict(cacheNames = "product",key = "123")
-*访问这个方法之后删除对应的缓存  对应之前的Redis缓存注解的配置 。key如果不填，默认是空，
+ *访问这个方法之后删除对应的缓存  对应之前的Redis缓存注解的配置 。key如果不填，默认是空，
  * 对应的值应该就是方法的参数的值了.对应BuyerProductController-list的缓存
  *@CachePut(cacheNames = "product",key = "123")
  * 对应之前的Redis缓存注解的配置
-* @CachePut 每次还是会执行方法中的内容，每次执行完成后会把返回的内容放到Redis中去.
- 这种注解和原来对应的返回对象需要是相同的才行，这里返回的是ModelAndView。
+ * @CachePut 每次还是会执行方法中的内容，每次执行完成后会把返回的内容放到Redis中去.
+这种注解和原来对应的返回对象需要是相同的才行，这里返回的是ModelAndView。
 可以到service层注解或者dao层注解CachePut*/
     public ModelAndView save(@Valid ProductForm productForm,
                              BindingResult bindingResult,
@@ -155,12 +156,15 @@ public class SellerProductController {
             return new ModelAndView("common/error", map);
         }
         ProductInfo productInfo = new ProductInfo();
-        //TODO 类目编号不能重复，如果是新增，需要类目编号之前不存在。如果是修改，需要排除当前id的类目，其他类目不存在该类目编号
+        //TODO 类目编号不能重复，如果是新增，需要类目编号之前不存在。
+        // 如果是修改，需要排除当前id的类目，其他类目不存在该类目编号
         try {
-            //新增商品  productForm.getProductId 为空
+            // 1 新增商品  productForm.getProductId 为空
             if (StringUtils.isEmpty(productForm.getProductId())) {
+                // todo 为社么进来？？？新增
                 productForm.setProductId(KeyUtil.getUniqueKey());
             } else {
+                // 2 修改商品
                 productInfo = productInfoService.findOne(productForm.getProductId());
             }
             BeanUtils.copyProperties(productForm, productInfo);

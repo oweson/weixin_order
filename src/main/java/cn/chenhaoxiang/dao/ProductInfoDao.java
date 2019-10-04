@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface ProductInfoDao extends JpaRepository<ProductInfo,String> {
     /**
-     * 通过商品状态查询
+     * 1 通过商品状态查询
      * @param productStatus
      * @return
      */

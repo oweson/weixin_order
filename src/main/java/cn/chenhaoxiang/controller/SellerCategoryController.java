@@ -75,7 +75,8 @@ public class SellerCategoryController {
     public ModelAndView save(@Valid ProductCategoryForm productCategoryForm,
                              BindingResult bindingResult,
                              Map<String, Object> map) {
-        /*这里一个@Valid的参数后必须紧挨着一个BindingResult 参数，否则spring会在校验不通过时直接抛出异常，
+        /*这里一个@Valid的参数后必须紧挨着一个BindingResult 参数，
+        否则spring会在校验不通过时直接抛出异常，
         BindingResult是springmvc的一个验证框架。*/
         if (bindingResult.hasErrors()) {
             map.put("msg", bindingResult.getFieldError().getDefaultMessage());
