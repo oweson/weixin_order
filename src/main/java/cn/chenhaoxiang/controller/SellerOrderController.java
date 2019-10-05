@@ -43,14 +43,14 @@ public class SellerOrderController {
     public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
                              @RequestParam(value = "size", defaultValue = "10") Integer size,
                              Map<String, Object> map) {
-        //map - 模板数据返回到页面
+        // 1 map - 模板数据返回到页面
         PageRequest pageRequest = new PageRequest(page - 1, size);
         Page<OrderDTO> orderDTOPage = orderService.findList(pageRequest);
         map.put("orderDTOPage", orderDTOPage);
         map.put("currentPage", page);
-        //当前页
+        // 2 当前页
         map.put("size", size);
-        //一页有多少数据
+        // 3 一页有多少数据
         return new ModelAndView("order/list", map);
     }
 

@@ -47,7 +47,7 @@ public class BuyerOrderController {
     public ResultVO<Map<String, String>> create(@Valid OrderForm orderForm,
                                                 BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            //表单校验,必须带上@Valid参数，然后必须有BindingResult参数
+            // 1 表单校验,必须带上@Valid参数，然后必须有BindingResult参数
             log.error("[创建订单] 参数不正确,orderForm={}", orderForm);
             throw new SellException(ResultEnum.PARAM_ERROR.getCode()
                     , bindingResult.getFieldError().getDefaultMessage());

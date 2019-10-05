@@ -15,37 +15,37 @@ import org.springframework.data.domain.Pageable;
 public interface OrderService {
 
     /**
-     * 创建订单
+     * 1 创建订单
      */
     OrderDTO create(OrderDTO orderDTO);
 
     /**
-     * 查询单个订单
+     * 2 查询单个订单
      */
     OrderDTO findOne(String orderId);
 
     /**
-     * 查询订单列表 - 单个人
+     * 3 查询订单列表 - 单个人
      */
     Page<OrderDTO> findList(String buyerOpenid, Pageable pageable);
 
-  /**
-     * 分页查询订单列表
+    /**
+     * 4 分页查询订单列表
      */
     Page<OrderDTO> findList(Pageable pageable);
 
     /**
-     * 取消订单
+     * 5 取消订单
      */
     OrderDTO cancel(OrderDTO orderDTO);
 
     /**
-     * 完结订单
+     * 6 完结订单
      */
     OrderDTO finish(OrderDTO orderDTO);
 
     /**
-     * 支付订单
+     * 7 支付订单
      */
     OrderDTO paid(OrderDTO orderDTO);
 

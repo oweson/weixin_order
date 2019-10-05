@@ -62,17 +62,22 @@ public class ProductInfoServiceImpl implements ProductInfoService {
 
     @Override
 //    @CachePut(key = "123") //和上面findOne的返回对象对应
-//    @CachePut(cacheNames = "product",key = "123") //和上面findOne的返回对象对应
+//    @CachePut(cacheNames = "product",key = "123")
+// 和上面findOne的返回对象对应
     public ProductInfo save(ProductInfo productInfo) {
         return productInfoDao.save(productInfo);
     }
 
+    /**
+     * 一个订单可能多个商品
+     */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void increaseStock(List<CartDTO> cartDTOList) {
         for (CartDTO cartDTO : cartDTOList) {
             ProductInfo productInfo = productInfoDao.findOne(cartDTO.getProductId());
-            if (productInfo == null) {//商品不存在
+            if (productInfo == null) {
+                //商品不存在
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
             }
             //增加库存

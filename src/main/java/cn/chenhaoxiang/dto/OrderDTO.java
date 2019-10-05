@@ -33,67 +33,75 @@ import java.util.List;
 //@JsonInclude(JsonInclude.Include.NON_NULL)//如果属性为null就不返回到前端去,也就是转json 为NULL不参加序列化
 public class OrderDTO {
     /**
-     * 订单ID
+     * 1 订单ID
      */
     private String orderId;
     /**
-     * 买家名字
+     * 2 买家名字
      */
     private String buyerName;
 
     /**
-     * 买家手机号
+     * 3 买家手机号
      */
     private String buyerPhone;
 
     /**
-     * 买家地址
+     * 4 买家地址
      */
     private String buyerAddress;
 
     /**
-     * 买家微信Openid
+     * 5 买家微信Openid
      */
     private String buyerOpenid;
     /**
-     * 订单金额
+     * 6 订单金额
      */
     private BigDecimal orderAmount;
 
     /**
-     * 订单状态，默认为新下单
+     * 7 订单状态，默认为新下单
      */
-    private Integer orderStatus;//初始化状态不需要了
+    private Integer orderStatus;
+    //初始化状态不需要了
 
     /**
-     * 支付状态，默认为0-未支付
+     * 8 支付状态，默认为0-未支付
      */
-    private Integer payStatus;//初始化状态不需要了
+    private Integer payStatus;
+    //初始化状态不需要了
 
     /**
-     * 创建时间
+     * 9 创建时间
      */
-    @JsonSerialize(using = Date2LongSerializer.class)//让时间戳精度在秒
+    @JsonSerialize(using = Date2LongSerializer.class)
+
     private Date createTime;
+    //让时间戳精度在秒
 
     /**
-     * 更新时间
+     * 10 更新时间
      */
-    @JsonSerialize(using = Date2LongSerializer.class)//让时间戳精度在秒
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
+    //让时间戳精度在秒
+
 
     /**
-     * 订单详情
+     * 11 订单详情
      */
     private List<OrderDetail> orderDetailList;
-//    private List<OrderDetail> orderDetailList = new ArrayList<>();//赋予初始值
+//    private List<OrderDetail> orderDetailList = new ArrayList<>();
+// 赋予初始值
 
     @JsonIgnore //对象转换成json格式返回到前端会忽略该方法
-    public OrderStausEnum getOrderStatusEnum(){
-        return EnumUtil.getByCode(orderStatus,OrderStausEnum.class);
+    public OrderStausEnum getOrderStatusEnum() {
+        return EnumUtil.getByCode(orderStatus, OrderStausEnum.class);
     }
+
     @JsonIgnore //对象转换成json格式返回到前端会忽略该方法
-    public PayStatusEnum getPayStatusEnum(){
-        return EnumUtil.getByCode(payStatus,PayStatusEnum.class);
+    public PayStatusEnum getPayStatusEnum() {
+        return EnumUtil.getByCode(payStatus, PayStatusEnum.class);
     }
 }
