@@ -66,9 +66,11 @@ public class OrderServiceImpl implements OrderService {
         //1.查询商品(数量，价格，库存等)
         for (OrderDetail orderDetail : orderDTO.getOrderDetailList()) {
             ProductInfo productInfo = productInfoService.findOne(orderDetail.getProductId());
-            if (productInfo == null) {//商品不存在
+            if (productInfo == null) {
+                //商品不存在
                 throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
-//                throw new ResponseBankException(ResultEnum.PRODUCT_NOT_EXIST);//修改状态码返回
+//                throw new ResponseBankException(ResultEnum.PRODUCT_NOT_EXIST);
+// 修改状态码返回
             }
             //2.计算总价
             orderAmount = productInfo.getProductPrice()
@@ -78,8 +80,10 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setDetailId(KeyUtil.getUniqueKey());
             orderDetail.setOrderId(orderId);
             //商品图片，名字等
-//            orderDetail.setProductName(productInfo.getProductName());//不要这样写，要写很多
-            BeanUtils.copyProperties(productInfo, orderDetail);//拷贝对应的属性值，将productInfo的属性值拷贝到orderDetail ，所以如果有不为null的属性值，记得写在前面
+//            orderDetail.setProductName(productInfo.getProductName());
+// 不要这样写，要写很多
+            BeanUtils.copyProperties(productInfo, orderDetail);
+            //拷贝对应的属性值，将productInfo的属性值拷贝到orderDetail ，所以如果有不为null的属性值，记得写在前面
             orderDetailDao.save(orderDetail);
 //            CartDTO cartDTO = new CartDTO(orderDetail.getProductId(),orderDetail.getProductQuantity());//方式一
 //            cartDTOList.add(cartDTO);//方式一
@@ -90,7 +94,8 @@ public class OrderServiceImpl implements OrderService {
         OrderMaster orderMaster = new OrderMaster();
         orderDTO.setOrderId(orderId);
         //Spring的对象拷贝函数 - 属性值是null的也会被拷贝进去，所以如果有不为null的属性值，记得写在前面。但是注意，有点默认值也会被写回去
-        BeanUtils.copyProperties(orderDTO, orderMaster);//将orderDTO拷贝到orderMaster
+        BeanUtils.copyProperties(orderDTO, orderMaster);
+        //将orderDTO拷贝到orderMaster
 
         orderMaster.setOrderAmount(orderAmount);
         //这两个状态值被覆盖为null了，记得写回去
@@ -103,8 +108,10 @@ public class OrderServiceImpl implements OrderService {
         //TODO 在这里，产生高并发的情况下，会出现超卖的情况 - 也就是会出现把库存扣到负数的情况
         List<CartDTO> cartDTOList = orderDTO.getOrderDetailList().stream().map(e ->
                 new CartDTO(e.getProductId(), e.getProductQuantity()))
-                .collect(Collectors.toList());//Java8新特性 (java8 lambda) 推荐
-        productInfoService.decreaseStock(cartDTOList);//判断数量是否够
+                .collect(Collectors.toList());
+        //Java8新特性 (java8 lambda) 推荐
+        productInfoService.decreaseStock(cartDTOList);
+        //判断数量是否够
 
         //发送websocket消息
         webSocket.sendMessage(orderDTO.getOrderId());

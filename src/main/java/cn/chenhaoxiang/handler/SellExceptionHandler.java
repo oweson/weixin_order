@@ -26,42 +26,49 @@ public class SellExceptionHandler {
 
     @Autowired
     private ProjectUrlConfig projectUrlConfig;
+
     /**
-     * 全局异常捕捉处理
+     * 1 全局异常捕捉处理
      * 拦截登录异常
      * 重定向至登录页面 - 也就是微信扫码登录
+     *
      * @return
      */
     @ExceptionHandler(value = SellAuthorizeException.class)
-    public ModelAndView handlerSellerAuthorizeException(){
+    public ModelAndView handlerSellerAuthorizeException() {
         return new ModelAndView("redirect:"
-        .concat(projectUrlConfig.getWechatOpenAuthorize())//微信开放平台登录授权地址
-        .concat("/wechat/qrAuthorize")
-        .concat("?returnUrl=")
-        .concat(projectUrlConfig.getProject())//服务器访问的地址
-        .concat("/seller/login"));
+                .concat(projectUrlConfig.getWechatOpenAuthorize())
+                //微信开放平台登录授权地址
+                .concat("/wechat/qrAuthorize")
+                .concat("?returnUrl=")
+                .concat(projectUrlConfig.getProject())
+                //服务器访问的地址
+                .concat("/seller/login"));
     }
 
     /**
-     * 全局异常捕捉处理
+     * 2 全局异常捕捉处理
+     *
      * @return
      */
     @ExceptionHandler(value = SellException.class)
     @ResponseBody
-    public ResultVO handlerSellException(SellException e){
-        return ResultVOUtil.error(e.getCode(),e.getMessage());
+    public ResultVO handlerSellException(SellException e) {
+        return ResultVOUtil.error(e.getCode(), e.getMessage());
     }
 
     /**
-     * 全局异常捕捉处理
+     * 3 全局异常捕捉处理
      * 返回状态码的修改 不再返回200
+     *
      * @return
      */
     @ExceptionHandler(value = ResponseBankException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN) //返回状态码的修改
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    //返回状态码的修改
     @ResponseBody
-    public ResultVO handlerResponseBankException(ResponseBankException e){
-        return ResultVOUtil.error(e.getCode(),e.getMessage());
+    public ResultVO handlerResponseBankException(ResponseBankException e) {
+        return ResultVOUtil.error(e.getCode(), e.getMessage());
     }
 
 }
